@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"firflybot/service"
+	"fireflybot/service"
 
 	"github.com/go-telegram/bot"
 	"github.com/go-telegram/bot/models"
@@ -16,7 +16,7 @@ func AIHandler(ctx context.Context, b *bot.Bot, upd *models.Update) {
 		return
 	}
 
-	reply := service.AiChatService(cfg)
+	reply := service.AiChatService(ctx, upd.Message.Text)
 	if reply == "" {
 		reply = "暂时无法获取回复，请稍后再试。"
 	}

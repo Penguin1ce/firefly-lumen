@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	myconfig "firflybot/config"
+	myconfig "fireflybot/config"
 	"io"
 	"log"
 	"net/http"

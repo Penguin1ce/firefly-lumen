@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"firflybot/config"
+	"fireflybot/config"
 
 	"github.com/go-telegram/bot"
 )

@@ -14,6 +14,8 @@ type Config struct {
 	AiKey string
 }
 
+var ConfigGlobal *Config
+
 func LoadConfig() (*Config, error) {
 	wd, _ := os.Getwd()
 	absEnv := filepath.Join(wd, ".env")
@@ -32,6 +34,6 @@ func LoadConfig() (*Config, error) {
 	if cfg.AiUrl == "" {
 		return nil, fmt.Errorf("AI_URL 环境变量未设置")
 	}
-
+	ConfigGlobal = cfg
 	return cfg, nil
 }
