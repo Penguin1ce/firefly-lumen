@@ -23,6 +23,6 @@ func main() {
 	// 统一注册所有的 handler
 	handler.RegisterHandlers(b, config)
 
-	log.Println("Bot 成功运行")
+	log.Println("流萤 Bot 成功运行")
 	b.Start(context.TODO())
 }
