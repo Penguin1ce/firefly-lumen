@@ -3,9 +3,12 @@ module fireflybot
 go 1.25.5
 
 require (
+	github.com/cloudwego/eino v0.7.11
 	github.com/cloudwego/eino-ext/components/model/openai v0.1.6
 	github.com/go-telegram/bot v1.17.0
 	github.com/joho/godotenv v1.5.1
+	gorm.io/driver/mysql v1.6.0
+	gorm.io/gorm v1.31.1
 )
 
 require (
@@ -16,7 +19,6 @@ require (
 	github.com/bytedance/sonic v1.14.1 // indirect
 	github.com/bytedance/sonic/loader v0.3.0 // indirect
 	github.com/cloudwego/base64x v0.1.6 // indirect
-	github.com/cloudwego/eino v0.7.11 // indirect
 	github.com/cloudwego/eino-ext/libs/acl/openai v0.1.10 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/eino-contrib/jsonschema v1.0.3 // indirect
@@ -48,6 +50,4 @@ require (
 	golang.org/x/sys v0.35.0 // indirect
 	golang.org/x/text v0.27.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	gorm.io/driver/mysql v1.6.0 // indirect
-	gorm.io/gorm v1.31.1 // indirect
 )

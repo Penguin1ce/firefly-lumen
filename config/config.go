@@ -9,12 +9,13 @@ import (
 )
 
 type Config struct {
-	TOKEN string
-	AiUrl string
-	AiKey string
+	TOKEN   string
+	AiUrl   string
+	AiKey   string
+	AiModel string
 }
 
-var ConfigGlobal *Config
+var GlobalCfw *Config
 
 func LoadConfig() (*Config, error) {
 	wd, _ := os.Getwd()
@@ -23,9 +24,10 @@ func LoadConfig() (*Config, error) {
 	_ = godotenv.Load(".env", "../.env", absEnv, parentAbsEnv)
 
 	cfg := &Config{
-		TOKEN: os.Getenv("TELEGRAM_BOT_TOKEN"),
-		AiUrl: os.Getenv("OPENAI_BASE_URL"),
-		AiKey: os.Getenv("OPENAI_API_KEY"),
+		TOKEN:   os.Getenv("TELEGRAM_BOT_TOKEN"),
+		AiUrl:   os.Getenv("OPENAI_BASE_URL"),
+		AiKey:   os.Getenv("OPENAI_API_KEY"),
+		AiModel: os.Getenv("OPENAI_MODEL"),
 	}
 
 	if cfg.TOKEN == "" {
@@ -34,6 +36,6 @@ func LoadConfig() (*Config, error) {
 	if cfg.AiUrl == "" {
 		return nil, fmt.Errorf("AI_URL 环境变量未设置")
 	}
-	ConfigGlobal = cfg
+	GlobalCfw = cfg
 	return cfg, nil
 }

@@ -20,11 +20,12 @@ type OpenAIClient struct {
 
 func NewOpenAIClient(ctx context.Context) (*OpenAIClient, error) {
 	llm, err := openai.NewChatModel(ctx, &openai.ChatModelConfig{
-		APIKey:  config.ConfigGlobal.AiKey,
-		Timeout: 10 * time.Second,
-		BaseURL: config.ConfigGlobal.AiUrl,
-		Model:   "gpt-5-chat-latest",
+		APIKey:  config.GlobalCfw.AiKey,
+		Timeout: 60 * time.Second,
+		BaseURL: config.GlobalCfw.AiUrl,
+		Model:   config.GlobalCfw.AiModel,
 	})
+	//deepseek-v3.1 gpt-5-chat-latest
 	if err != nil {
 		return nil, fmt.Errorf("openai.NewChatModel: %w", err)
 	}
