@@ -5,7 +5,7 @@ import "time"
 // Session 对应Telegram的对话，个人对话一人一个chatId,用chatId作为主键
 type Session struct {
 	ID        uint   `gorm:"primaryKey"`
-	SID       string `gorm:"uniqueIndex"`
+	SID       string `gorm:"column:s_id;type:varchar(64);not null;uniqueIndex"`
 	IsActive  bool
 	CreatedAt time.Time
 	UpdatedAt time.Time
@@ -24,7 +24,7 @@ func IsActive(sid string) bool {
 func CreateSession(sid string) (*Session, error) {
 	session := &Session{}
 	err := DB.
-		Where("sid = ?", sid).
+		Where("s_id = ?", sid).
 		FirstOrCreate(session, Session{
 			SID:      sid,
 			IsActive: true,

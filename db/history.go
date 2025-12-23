@@ -3,6 +3,8 @@ package db
 import (
 	"fmt"
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
 
 type History struct {
@@ -14,14 +16,9 @@ type History struct {
 	UpdatedAt time.Time
 }
 
-func GetAllMessagesOrderByTime(sid string) ([]History, error) {
-	session := Session{}
-	err := DB.Where("sid = ?", sid).First(&session).Error
-	if err != nil {
-		return nil, err
-	}
-	var history []History
-	err = DB.Where("sid = ?", sid).Order("created_at ASC").Find(&history).Error
+func GetAllMessagesOrderByTime(sid string) ([]*History, error) {
+	var history []*History
+	err := DB.Where("sid = ?", sid).Order("created_at ASC").Find(&history).Error
 	if err != nil {
 		return nil, err
 	}
@@ -30,18 +27,22 @@ func GetAllMessagesOrderByTime(sid string) ([]History, error) {
 
 // AppendMessage 用户消息和AI聊天记录插入到数据库
 func AppendMessage(sid string, message string, isUser bool) error {
-	session := Session{}
-	err := DB.Where("sid = ?", sid).First(&session).Error
-	if err != nil {
-		return err
-	}
 	var history History
 	history.SID = sid
 	history.Message = message
 	history.IsUser = isUser
-	err = DB.Create(&history).Error
+	err := DB.Create(&history).Error
 	if err != nil {
 		return fmt.Errorf("插入到历史消息的时候出错：%v", err)
 	}
+	return nil
+}
+
+func DeleteAllMessages(sid string) error {
+	err := DB.Where("sid = ?", sid).Delete(&History{}).Error
+	if err != nil {
+		return err
+	}
+	logrus.Info("成功删除所有 " + sid + " 的消息")
 	return nil
 }

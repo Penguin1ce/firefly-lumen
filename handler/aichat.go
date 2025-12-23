@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"math/rand"
+	"strconv"
 	"time"
 
 	"fireflybot/service"
@@ -18,7 +19,7 @@ func AIHandler(ctx context.Context, b *bot.Bot, upd *models.Update) {
 		return
 	}
 
-	reply := service.AiChatService(ctx, upd.Message.Text)
+	reply := service.AiChatService(ctx, strconv.FormatInt(upd.Message.Chat.ID, 10), upd.Message.Text)
 	if reply == "" {
 		reply = "暂时无法获取回复，请稍后再试。"
 	}
@@ -30,7 +31,7 @@ func AIHandler(ctx context.Context, b *bot.Bot, upd *models.Update) {
 	if err != nil {
 		log.Printf("send message error: %v", err)
 	}
-	
+
 	_ = SendRandomSticker(ctx, b, upd.Message.Chat.ID)
 
 }

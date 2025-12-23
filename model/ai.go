@@ -11,6 +11,7 @@ import (
 	"github.com/cloudwego/eino/components/model"
 	"github.com/cloudwego/eino/components/prompt"
 	"github.com/cloudwego/eino/schema"
+	"github.com/sirupsen/logrus"
 )
 
 // OpenAIClient 实现 AIModel 的OpenAIClient
@@ -29,6 +30,7 @@ func NewOpenAIClient(ctx context.Context) (*OpenAIClient, error) {
 	if err != nil {
 		return nil, fmt.Errorf("openai.NewChatModel: %w", err)
 	}
+	logrus.Info("openai.NewChatModel success")
 	return &OpenAIClient{llm: llm}, nil
 }
 
