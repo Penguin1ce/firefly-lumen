@@ -13,7 +13,7 @@ type Session struct {
 
 func IsActive(sid string) bool {
 	session := Session{}
-	err := DB.Where("sid = ?", sid).First(&session).Error
+	err := DB.Where("s_id = ?", sid).First(&session).Error
 	if err != nil {
 		return false
 	}
@@ -35,6 +35,6 @@ func CreateSession(sid string) (*Session, error) {
 // ExistsSession 查询该用户是否存在
 func ExistsSession(sid string) bool {
 	session := Session{}
-	err := DB.Where("sid = ?", sid).First(&session).Error
+	err := DB.Where("s_id = ?", sid).First(&session).Error
 	return err == nil
 }

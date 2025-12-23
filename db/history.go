@@ -18,7 +18,7 @@ type History struct {
 
 func GetAllMessagesOrderByTime(sid string) ([]*History, error) {
 	var history []*History
-	err := DB.Where("sid = ?", sid).Order("created_at ASC").Find(&history).Error
+	err := DB.Where("s_id = ?", sid).Order("created_at ASC").Find(&history).Error
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +39,7 @@ func AppendMessage(sid string, message string, isUser bool) error {
 }
 
 func DeleteAllMessages(sid string) error {
-	err := DB.Where("sid = ?", sid).Delete(&History{}).Error
+	err := DB.Where("s_id = ?", sid).Delete(&History{}).Error
 	if err != nil {
 		return err
 	}
