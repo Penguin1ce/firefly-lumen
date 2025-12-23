@@ -2,6 +2,8 @@ package handler
 
 import (
 	"context"
+	"fireflybot/ai/aimanage"
+	"fireflybot/db"
 	"fmt"
 	"log"
 	"strconv"
@@ -15,11 +17,23 @@ func StartHandler(ctx context.Context, b *bot.Bot, upd *models.Update) {
 		return
 	}
 	chatID := upd.Message.Chat.ID
-	text := upd.Message.Text
+	sid := strconv.FormatInt(chatID, 10)
 
-	_, err := b.SendMessage(ctx, &bot.SendMessageParams{
+	manager := aimanage.GetGlobalManager()
+	helper, err := manager.GetHelperBySid(sid)
+	if err == nil {
+		if err := helper.DeleteAllHistory(); err != nil {
+			log.Printf("delete history failed: %v", err)
+		}
+	} else {
+		if err := db.DeleteAllMessages(sid); err != nil {
+			log.Printf("delete history from db failed: %v", err)
+		}
+	}
+
+	_, err = b.SendMessage(ctx, &bot.SendMessageParams{
 		ChatID: upd.Message.Chat.ID,
-		Text:   strconv.FormatInt(chatID, 10) + text,
+		Text:   "新的对话已开启，已清空历史消息。",
 	})
 	if err != nil {
 		log.Printf("send message error: %v", err)
